@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "394396759436",
+    "project_id": "manager-device-in-room",
+    "storage_bucket": "manager-device-in-room.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:394396759436:android:535dd1e01a03fe1f5b92a9",
+        "android_client_info": {
+          "package_name": "com.example.cuoiki"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_jgnoNQHnhfBmoxQC8htf6g92TUREGnA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
