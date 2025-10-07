@@ -2,9 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'screens/bedroom.dart'; // import class Bedroom từ file khác
-import 'screens/livingroom.dart';
-import 'screens/kitchen.dart';
+
+import 'login.dart';
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,87 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Login Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      home: const LoginPage(),
-    );
-  }
-}
-
-// ------------------ Login Page ------------------
-class LoginPage extends StatelessWidget {
-  const LoginPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: ElevatedButton(
-          child: const Text("Login"),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const HomePage()),
-            );
-          },
-        ),
-      ),
-    );
-  }
-}
-
-// ------------------ Home Page ------------------
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text("Home Page")),
-      drawer: Drawer(
-        child: ListView(
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(color: Colors.blue),
-              child: Text(
-                "Menu",
-                style: TextStyle(color: Colors.white, fontSize: 20),
-              ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.bed),
-              title: const Text("Bedroom"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Bedroom()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.living),
-              title: const Text("Livingroom"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Livingroom()),
-                );
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.kitchen),
-              title: const Text("Kitchen"),
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const Kitchen()),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-      body: const Center(child: Text("Welcome to Home Page")),
+      initialRoute: 'login',
+      routes: {'login': (context) => mylogin()},
     );
   }
 }
