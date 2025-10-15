@@ -15,17 +15,17 @@ class _myloginState extends State<mylogin> {
   final _emailCtrl = TextEditingController();
   final _passCtrl  = TextEditingController();
 
-  @override
-  void initState() {
-    super.initState();
-    // tự điền email (và password nếu muốn) từ SharedPreferences
-    LocalAuth.getSavedEmail().then((e) {
-      if (e != null) _emailCtrl.text = e;
-      // Nếu muốn auto-fill password luôn:
-      LocalAuth.getSavedPassword().then((p) { if (p != null) _passCtrl.text = p; });
-      setState(() {});
-    });
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // tự điền email (và password nếu muốn) từ SharedPreferences
+  //   LocalAuth.getSavedEmail().then((e) {
+  //     if (e != null) _emailCtrl.text = e;
+  //     // Nếu muốn auto-fill password luôn:
+  //     LocalAuth.getSavedPassword().then((p) { if (p != null) _passCtrl.text = p; });
+  //     setState(() {});
+  //   });
+  // }
 
   @override
   void dispose() {
@@ -53,7 +53,8 @@ class _myloginState extends State<mylogin> {
       return;
     }
 
-    final ok = await LocalAuth.validateLogin(email: email, password: pass);
+    final ok = await LocalAuth.login(email: email, password: pass);
+    
     if (!ok) {
       // Sai thông tin → báo lỗi + gợi ý sang đăng ký
       _toast('Sai email hoặc mật khẩu');
@@ -87,7 +88,7 @@ class _myloginState extends State<mylogin> {
       return;
     }
 
-    await LocalAuth.setLoggedIn(true);
+    // await LocalAuth.setLoggedIn(true);
 
 // chuyển sang Home và thay thế Login (không cho quay lại bằng nút back)
 if (!mounted) return;

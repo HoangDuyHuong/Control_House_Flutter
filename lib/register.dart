@@ -43,8 +43,17 @@ class _RegisterPageState extends State<RegisterPage> {
       return;
     }
 
-    await LocalAuth.saveAccount(username: username, email: email, password: pass);
-    await LocalAuth.setLoggedIn(false); // sau đăng ký quay về login
+    // await LocalAuth.saveAccount(username: username, email: email, password: pass);
+    // await LocalAuth.setLoggedIn(false); // sau đăng ký quay về login
+
+    //change code
+    final created = await LocalAuth.register(email: email, password: pass, name: username);
+    if (!created) {
+      _toast('Email đã tồn tại, vui lòng dùng email khác');
+      return;
+    }
+
+
 
     // Quay về Login và TRẢ dữ liệu để tự điền
     if (!mounted) return;
