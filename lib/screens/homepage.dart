@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'screens/bedroom.dart'; // import class Bedroom từ file khác
-import 'screens/livingroom.dart';
-import 'screens/kitchen.dart';
+import 'bedroom.dart'; // import class Bedroom từ file khác
+import 'livingroom.dart';
+import 'kitchen.dart';
 // import 'local_auth.dart';
 import 'login.dart'; // để logout quay về màn hình login (mylogin)
 
