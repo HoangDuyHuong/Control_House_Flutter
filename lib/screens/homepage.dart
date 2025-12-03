@@ -47,6 +47,7 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.home),
                 title: Text("Home", style: TextStyle(fontSize: 25),),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> MyHomePage(title: '',)));
                 },
               ),
@@ -54,6 +55,7 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.living),
                 title: Text("Livingroom", style: TextStyle(fontSize: 25),),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Livingroom()));
                 },
               ),
@@ -61,6 +63,7 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.bed),
                 title: Text("Bedroom", style: TextStyle(fontSize: 25),),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Bedroom()));
                 },
               ),
@@ -68,6 +71,7 @@ class MyHomePage extends StatelessWidget {
                 leading: Icon(Icons.kitchen),
                 title: Text("Kitchen", style: TextStyle(fontSize: 25),),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.of(context).push(MaterialPageRoute(builder: (context)=> Kitchen()));
                 },
               ),

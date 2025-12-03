@@ -9,11 +9,11 @@ class Livingroom extends StatefulWidget {
 }
 
 class _LivingroomState extends State<Livingroom> {
-  final DatabaseReference _deviceRef = FirebaseDatabase.instance.ref(
-    'Room/Livingroom/Device',
+  final DatabaseReference _deviceRef = FirebaseDatabase.instance.ref(   // lệnh dùng để trỏ đến nơi chứa data trên firebase
+    'Room/Livingroom/Device',  // trỏ đến trường th/bị
   );
-  final DatabaseReference _sensorRef = FirebaseDatabase.instance.ref(
-    'Room/Livingroom/Sensor',
+  final DatabaseReference _sensorRef = FirebaseDatabase.instance.ref(   // lệnh dùng để trỏ đến nơi chứa data trên firebase
+    'Room/Livingroom/Sensor',   // trỏ đến trường sensors
   );
 
   @override
@@ -82,11 +82,11 @@ class _LivingroomState extends State<Livingroom> {
           Positioned(
             left: 25,
             top: 171,
-            child: StreamBuilder<DatabaseEvent>(
+            child: StreamBuilder<DatabaseEvent>(  // Tạo một đường ống kết nối trực tiếp, Lắng nghe data thời gian thực
               stream: _deviceRef.child('LED1').onValue,
               builder: (context, snapshot) {
-                final bool isOn = (snapshot.data?.snapshot.value ?? 0) == 1;
-                return Container(
+                final bool isOn = (snapshot.data?.snapshot.value ?? 0) == 1;  // nhận data từ firebase
+                return Container(   // vẽ lại giao diện (thay đổi ảnh đèn)
                   width: 167,
                   height: 183,
                   decoration: BoxDecoration(
@@ -126,7 +126,7 @@ class _LivingroomState extends State<Livingroom> {
                         child: SizedBox(
                           width: 88,
                           height: 88,
-                          child: Image.asset(
+                          child: Image.asset(  // thay đổi ảnh nếu thỏa điều kiện
                             isOn
                                 ? 'assets/images/led.png'
                                 : 'assets/images/led_off.png',
@@ -142,10 +142,10 @@ class _LivingroomState extends State<Livingroom> {
                         child: SizedBox(
                           width: 67,
                           height: 32,
-                          child: Switch(
+                          child: Switch(  
                             value: isOn,
                             onChanged: (val) {
-                              _deviceRef.child('LED1').set(val ? 1 : 0);
+                              _deviceRef.child('LED1').set(val ? 1 : 0);  // gửi lệnh lên firebase
                             },
                           ),
                         ),
@@ -391,6 +391,8 @@ class _LivingroomState extends State<Livingroom> {
               },
             ),
           ),
+          
+          
           // Sensors
           const Positioned(
             left: 37,
