@@ -6,26 +6,48 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// Data model in SharedPreferences:
 ///   - "users_json": JSON object { "<email>": {"password": "...", "name": "..."} }
 ///   - "current_user": the email of the currently logged-in account
+
+
+//=======================================================================================
+// SharePreference là  cơ chế để lưu trữ các dữ liệu đơn giản trên local (bộ nhớ máy chủ)
+// khi tắt máy thì bộ nhớ vẫn còn
+//=======================================================================================
+
+
+//====================================================================================
+// Bình thường sharePreference không lưu được nhiều cặp key/value, phải dùng các 
+// phương pháp quản lý khác để lưu trữ được nhiều thông tin account, có 2 cách:
+// 1. Dùng string lưu nhiều cặp key/value nhưng khi đăng nhập sẽ phải theo form email 
+// và pass đã lập trình (VD: khi lập trình ta lưu email: HDH@gmail.com  pass:123) 
+// thì khi đăng nhập bạn phải nhập đúng chuổi đó -> bất tiện cho user
+// 2. Dùng cách quản lý khác đó là lưu nhiều account dưới dạng JSON, khi người dùng 
+// đăng ký TK bất kỳ, chương trình sẽ lưu thông tin đó dưới dạng JSON và lưu trữ thành 
+// chuỗi, có thể lưu nhiều user và pass word theo ý thích của user -> tiện hơn 
+//====================================================================================
+
+
 class LocalAuth {
-  static const _kUsers = 'users_json';
-  static const _kCurrent = 'current_user';
+  static const _kUsers = 'users_json'; //Lưu 1 chuỗi JSON chứa all tài khoản
+  static const _kCurrent = 'current_user'; // lưu user của người đang đăng nhập
 
   /// Read users map from SharedPreferences. Returns {} if empty / not set.
+  /// // Hàm đọc data
   static Future<Map<String, dynamic>> _getUsers() async {
     final prefs = await SharedPreferences.getInstance();
     final s = prefs.getString(_kUsers);
     if (s == null || s.isEmpty) return {};
 
     try {
-      final obj = jsonDecode(s);
+      final obj = jsonDecode(s); // giải mã
       if (obj is Map<String, dynamic>) return obj;
     } catch (_) {}
     return {};
   }
 
+// Hàm ghi/save data
   static Future<void> _saveUsers(Map<String, dynamic> users) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_kUsers, jsonEncode(users));
+    await prefs.setString(_kUsers, jsonEncode(users)); // mã hóa
   }
 
   /// Creates a new account. Returns false if email already exists.
@@ -34,10 +56,10 @@ class LocalAuth {
     required String password,
     String? name,
   }) async {
-    final users = await _getUsers();
-    if (users.containsKey(email)) return false;
+    final users = await _getUsers(); // lấy danh sách user cũ lên
+    if (users.containsKey(email)) return false; // ktra email đ/ký đã tồn tại?
     users[email] = {'password': password, 'name': name ?? ''};
-    await _saveUsers(users);
+    await _saveUsers(users); // nếu chưa có thể thêm vào list mới
     return true;
   }
 
@@ -46,11 +68,11 @@ class LocalAuth {
     required String email,
     required String password,
   }) async {
-    final users = await _getUsers();
+    final users = await _getUsers(); // lấy danh sách
     final u = users[email];
-    if (u is Map && u['password'] == password) {
+    if (u is Map && u['password'] == password) { // so sánh pass user nhập và pass đã lưu trước đó
       final prefs = await SharedPreferences.getInstance();
-      await prefs.setString(_kCurrent, email);
+      await prefs.setString(_kCurrent, email); // nếu đúng thì lưu vào biến _KCurrent
       return true;
     }
     return false;
@@ -59,7 +81,7 @@ class LocalAuth {
   /// Clears the current user (does NOT delete the account)
   static Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(_kCurrent);
+    await prefs.remove(_kCurrent); // ko phải xóa TK ra khỏi danh sách mà là xóa phiên làm việc
   }
 
   /// Returns the email of the currently logged-in account, or null.
@@ -95,9 +117,6 @@ class LocalAuth {
     if (legacyEmail != null && legacyPass != null && !users.containsKey(legacyEmail)) {
       users[legacyEmail] = {'password': legacyPass, 'name': ''};
       await _saveUsers(users);
-      // Optionally clear legacy keys:
-      // await prefs.remove(emailKey);
-      // await prefs.remove(passwordKey);
     }
   }
 }

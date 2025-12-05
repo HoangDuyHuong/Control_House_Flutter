@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:loginscreen/local_auth.dart';
-// import 'package:loginscreen/register.dart';
 import 'homepage.dart';
 import 'local_auth.dart';
 import 'register.dart';
@@ -41,14 +39,14 @@ class _myloginState extends State<mylogin> {
   }
 
   Future<void> _handleLogin() async {
-    final email = _emailCtrl.text.trim();
+    final email = _emailCtrl.text.trim(); // nhập thông tin
     final pass  = _passCtrl.text;
 
-    if (email.isEmpty || pass.isEmpty) {
+    if (email.isEmpty || pass.isEmpty) { //kra rỗng
       _toast('Vui lòng nhập Email và Password');
       return;
     }
-    if (!_isValidEmail(email)) {
+    if (!_isValidEmail(email)) { // ktra cú pháp
       _toast('Email không đúng cú pháp (vd: abc@gmail.com)');
       return;
     }
@@ -59,7 +57,7 @@ class _myloginState extends State<mylogin> {
       // Sai thông tin → báo lỗi + gợi ý sang đăng ký
       _toast('Sai email hoặc mật khẩu');
       if (!mounted) return;
-      showDialog(
+      showDialog( // Show thông báo gợi ý đăng ký nếu ch có TK 
         context: context,
         builder: (_) => AlertDialog(
           title: const Text('Chưa có tài khoản?'),
@@ -74,7 +72,7 @@ class _myloginState extends State<mylogin> {
                   context,
                   MaterialPageRoute(builder: (_) => const RegisterPage()),
                 );
-                if (result is Map) {
+                if (result is Map) {  // sau khi đăng ký, và quay lại tự động điền thông tin
                   _emailCtrl.text = result['email'] ?? _emailCtrl.text;
                   _passCtrl.text  = result['password'] ?? _passCtrl.text;
                   setState(() {});
@@ -88,7 +86,6 @@ class _myloginState extends State<mylogin> {
       return;
     }
 
-    // await LocalAuth.setLoggedIn(true);
 
 // chuyển sang Home và thay thế Login (không cho quay lại bằng nút back)
 if (!mounted) return;
@@ -97,12 +94,7 @@ Navigator.pushReplacement(
   MaterialPageRoute(builder: (_) => const MyHomePage(title: 'Home')),
 );
 
-// nếu muốn xoá sạch stack:
-// Navigator.pushAndRemoveUntil(
-//   context,
-//   MaterialPageRoute(builder: (_) => const MyHomePage()),
-//   (_) => false,
-// );
+
   }
 
   void _toast(String msg) {
@@ -111,8 +103,7 @@ Navigator.pushReplacement(
 
   @override
   Widget build(BuildContext context) {
-    // *** GIỮ nguyên bố cục giao diện bạn đã làm ***
-    // CHỈ THAY: gán controllers & onTap cho các ô/nút trong _welcomesection
+    //  GIỮ nguyên bố cục giao diện đã làm 
     return Scaffold(
       body: Stack(
         children: [
@@ -193,7 +184,6 @@ class _welcomesection extends StatelessWidget {
   final VoidCallback onSignUpTap;
 
   const _welcomesection({
-    // super.key,
     required this.emailCtrl,
     required this.passCtrl,
     required this.onLogin,
@@ -209,7 +199,6 @@ class _welcomesection extends StatelessWidget {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: SingleChildScrollView(
-          // tăng top để Welcome + ảnh thấp xuống giống mockup
           padding: const EdgeInsets.fromLTRB(24, 140, 24, 24),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -219,8 +208,7 @@ class _welcomesection extends StatelessWidget {
                 style: TextStyle(fontSize: 35, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
-
-              // GIỮ NGUYÊN kích thước & ảnh như bạn yêu cầu
+     
               SizedBox(
                 height: size.height * 0.3,
                 child: Image.asset(
